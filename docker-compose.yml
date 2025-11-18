@@ -1,18 +1,38 @@
+version: "3.9"
+
 services:
   db:
     image: mysql:8.0
+    container_name: nest-mysql
     environment:
       MYSQL_ROOT_PASSWORD: db_password
       MYSQL_DATABASE: nestdb
     volumes:
-      - dbdata:/var/lib/mysql
+      # Host directory -> MySQL data dir
+      - ./mysql-data:/var/lib/mysql
     ports:
-      - '3308:3306'
+      # host:container
+      - "3308:3306"
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-pdb_password"]
       interval: 10s
       timeout: 5s
       retries: 5
 
-volumes:
-  dbdata:
+  app:
+    build: .          
+    container_name: nest-app
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      # This overrides the DATABASE_URL in your .env **inside the container**
+      # Note: host is "db" (service name), port is 3306 (container port)
+      DATABASE_URL: "mysql://root:db_password@db:3306/nestdb"
+      NODE_ENV: production
+    ports:
+      - "3000:3000"
+    # If you still want to load other vars from .env, you can use:
+    # env_file:
+    #   - .env
+    # environment values here will override .env inside the container
