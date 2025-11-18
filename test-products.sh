@@ -24,18 +24,18 @@ echo "=== Getting All Products ==="
 curl -X GET http://localhost:3000/products
 echo -e "\n"
 
-echo "=== Getting Product with ID 1 ==="
-curl -X GET http://localhost:3000/products/1
+echo "=== Getting Product with ID  ==="
+curl -X GET http://localhost:3000/products/2
 echo -e "\n"
 
-echo "=== Updating Product 1 ==="
-curl -X PUT http://localhost:3000/products/1 \
+echo "=== Updating Product 2 ==="
+curl -X PUT http://localhost:3000/products/2 \
   -H "Content-Type: application/json" \
   -d '{"name":"Updated Laptop","price":1400.00}'
 echo -e "\n"
 
-echo "=== Deleting Product 1 ==="
-curl -X DELETE http://localhost:3000/products/1
+echo "=== Deleting Product 2 ==="
+curl -X DELETE http://localhost:3000/products/2
 echo -e "\n"
 
 echo "=== Final Product List ==="
