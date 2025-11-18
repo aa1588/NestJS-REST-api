@@ -52,3 +52,9 @@ You run this whenever the Prisma Client must be refreshed
  $ chmod +x test-products.sh
  $ ./test-products.sh  
 ```
+
+---
+## Docker Compose
+```
+ $ docker compose up --build
+```
